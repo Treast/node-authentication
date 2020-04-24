@@ -78,6 +78,27 @@ passport.use(
   ),
 )
 
+const jwtOptions = {
+  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+  secretOrKey: process.env.SECRET_JWT,
+}
+passport.use(
+  'jwt',
+  new JWTStrategy(jwtOptions, (payload, done) => {
+    try {
+      User.findOne({
+        where: {
+          id: payload.id,
+        },
+      }).then(user => {
+        done(null, user)
+      })
+    } catch (err) {
+      done(err)
+    }
+  }),
+)
+
 module.exports = app => {
   app.get('/status', (req, res) => {
     res.status(200).send({ message: 'Server is running' })
@@ -134,4 +155,12 @@ module.exports = app => {
       }
     })(req, res)
   })
+
+  app.get(
+    '/logged',
+    passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+      res.status(200).send({ message: "You're logged in !" })
+    },
+  )
 }
