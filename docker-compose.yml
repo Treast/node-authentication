@@ -1,0 +1,35 @@
+version: '3'
+services:
+  db:
+    build: ./
+    container_name: ooly_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: 172.168.0.3
+    volumes:
+      - ./_docker/mariadb:/var/lib/mysql
+    ports:
+      - '3306:3306'
+    networks:
+      vpcbr:
+        ipv4_address: 172.168.0.2
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: ooly_phpmyadmin
+    ports:
+      - 1234:80
+    links:
+      - db:db
+    environment:
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      vpcbr:
+        ipv4_address: 172.168.0.3
+networks:
+  vpcbr:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.168.0.0/16
