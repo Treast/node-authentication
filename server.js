@@ -9,6 +9,11 @@ const bodyParser = require('body-parser')
 app.use(bodyParser.json())
 app.use(passport.initialize())
 
+// Authentication strategies
+require('./strategies/login')
+require('./strategies/register')
+require('./strategies/jwt')
+
 require('./routes/auth')(app)
 
 app.get('/', (req, res) => {
