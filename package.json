@@ -4,6 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "docker:start": "docker-compose up -d",
+    "docker:build": "docker build -t ooly_db .",
+    "docker:stop": "docker-compose down",
+    "start": "nodemon server.js",
     "migrate": "npx sequelize-cli db:migrate",
     "migrate:reset": "npx sequelize-cli db:migrate:undo:all && npm run migrate",
     "pretest": "cross-env NODE_ENV=test npm run migrate:reset",
