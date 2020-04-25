@@ -1,7 +1,9 @@
 language: node_js
 node_js:
   - 'stable'
-services:
-  - mariadb
+addons:
+  mariadb: '10.5'
+before_install:
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS ooly_test;'
 env:
   - NODE_ENV=test
