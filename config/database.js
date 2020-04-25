@@ -1,5 +1,10 @@
 const Sequelize = require('sequelize')
 
+const databaseName =
+  process.env.NODE_ENV === 'test'
+    ? process.env.DATABASE_NAME_TEST
+    : process.env.DATABASE_NAME
+
 const sequelize = new Sequelize(
   process.env.DATABASE_NAME,
   process.env.DATABASE_USERNAME,

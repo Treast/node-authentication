@@ -11,6 +11,15 @@ app.use(passport.initialize())
 
 require('./routes/auth')(app)
 
-app.listen(process.env.SERVER_PORT, function () {
+app.get('/', (req, res) => {
+  res.json({ message: 'Hello World !' })
+})
+
+const server = app.listen(process.env.SERVER_PORT, function () {
   console.log(`Server is running on port ${process.env.SERVER_PORT}`)
 })
+
+module.exports = {
+  app,
+  server,
+}
