@@ -17,23 +17,22 @@ passport.use(
         where: {
           username,
         },
+      }).then(user => {
+        if (!user) {
+          return done(null, false, { message: 'Username not found' })
+        } else {
+          const saltPassword = password + process.env.SECRET_SALT
+          bcrypt.compare(saltPassword, user.password).then(response => {
+            if (!response) {
+              return done(null, false, { message: 'Incorrect password' })
+            }
+            return done(null, user)
+          })
+        }
       })
-        .then(user => {
-          if (!user) {
-            return done(null, false, { message: 'Username not found' })
-          } else {
-            const saltPassword = password + process.env.SECRET_SALT
-            bcrypt.compare(saltPassword, user.password).then(response => {
-              if (!response) {
-                return done(null, false, { message: 'Incorrect password' })
-              }
-              return done(null, user)
-            })
-          }
-        })
-        .catch(err => {
-          done(err, false)
-        })
+      // .catch(err => {
+      //   done(err, false)
+      // })
     },
   ),
 )

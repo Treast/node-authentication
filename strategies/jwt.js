@@ -16,15 +16,14 @@ passport.use(
       where: {
         id: payload.id,
       },
+    }).then(user => {
+      if (user) {
+        return done(null, user)
+      }
+      return done(null, false)
     })
-      .then(user => {
-        if (user) {
-          return done(null, user)
-        }
-        return done(null, false)
-      })
-      .catch(err => {
-        return done(err, false)
-      })
+    //   .catch(err => {
+    //     return done(err, false)
+    //   })
   }),
 )

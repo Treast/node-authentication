@@ -98,7 +98,7 @@ describe('Auth routes', () => {
 
   test('should block access to incorrect user', async done => {
     const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTg3ODE1MDg1fQ.q2zjJvyk3dRataU47AYDXVlR9TrmEkST98YwDb5PUxU'
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTg3ODE2NDkxfQ.WkcVc4BaJcuFJegoQ0pL2LhM0mWkVWViJn6a4We4dRE'
     const res = await request(app)
       .get('/logged')
       .set('Authorization', `Bearer ${token}`)

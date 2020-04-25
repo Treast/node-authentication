@@ -17,25 +17,24 @@ passport.use(
         where: {
           username,
         },
-      })
-        .then(user => {
-          if (user !== null) {
-            return done(null, false, { message: 'Username is already taken' })
-          } else {
-            const saltPassword = password + process.env.SECRET_SALT
-            bcrypt.hash(saltPassword, 12).then(hashedPassword => {
-              User.create({
-                username,
-                password: hashedPassword,
-              }).then(user => {
-                return done(null, user)
-              })
+      }).then(user => {
+        if (user !== null) {
+          return done(null, false, { message: 'Username is already taken' })
+        } else {
+          const saltPassword = password + process.env.SECRET_SALT
+          bcrypt.hash(saltPassword, 12).then(hashedPassword => {
+            User.create({
+              username,
+              password: hashedPassword,
+            }).then(user => {
+              return done(null, user)
             })
-          }
-        })
-        .catch(err => {
-          return done(err, false)
-        })
+          })
+        }
+      })
+      // .catch(err => {
+      //   return done(err, false)
+      // })
     },
   ),
 )
