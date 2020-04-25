@@ -4,6 +4,6 @@ node_js:
 addons:
   mariadb: '10.5'
 before_install:
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS ooly_test;'
+  - mysql -u root -e 'CREATE DATABASE IF NOT EXISTS ooly_test;'
 env:
   - NODE_ENV=test
