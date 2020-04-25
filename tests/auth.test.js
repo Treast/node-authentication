@@ -95,6 +95,18 @@ describe('Auth routes', () => {
     expect(res.text).toBe('Unauthorized')
     done()
   })
+
+  test('should block access to incorrect user', async done => {
+    const token =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTg3ODE1MDg1fQ.q2zjJvyk3dRataU47AYDXVlR9TrmEkST98YwDb5PUxU'
+    const res = await request(app)
+      .get('/logged')
+      .set('Authorization', `Bearer ${token}`)
+
+    expect(res.status).toEqual(401)
+    expect(res.text).toBe('Unauthorized')
+    done()
+  })
 })
 
 afterAll(done => {
