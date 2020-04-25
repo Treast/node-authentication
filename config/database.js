@@ -6,7 +6,7 @@ const databaseName =
     : process.env.DATABASE_NAME
 
 const sequelize = new Sequelize(
-  process.env.DATABASE_NAME,
+  databaseName,
   process.env.DATABASE_USERNAME,
   process.env.DATABASE_PASSWORD,
   {

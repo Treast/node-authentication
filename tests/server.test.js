@@ -11,6 +11,15 @@ describe('Server running well', () => {
     expect(res.body.message).toBe('Hello World !')
     done()
   })
+
+  test('should say that server is running', async done => {
+    const res = await request(app).get('/status')
+
+    expect(res.status).toEqual(200)
+    expect(res.body).toHaveProperty('message')
+    expect(res.body.message).toBe('Server is running')
+    done()
+  })
 })
 
 afterAll(done => {

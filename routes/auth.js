@@ -17,12 +17,12 @@ passport.use(
       session: false,
     },
     (username, password, done) => {
-      try {
-        User.findOne({
-          where: {
-            username,
-          },
-        }).then(user => {
+      User.findOne({
+        where: {
+          username,
+        },
+      })
+        .then(user => {
           if (user !== null) {
             done(null, false, { message: 'Username is already taken' })
           } else {
@@ -37,9 +37,9 @@ passport.use(
             })
           }
         })
-      } catch (err) {
-        done(err)
-      }
+        .catch(err => {
+          done(err, false)
+        })
     },
   ),
 )
@@ -53,12 +53,12 @@ passport.use(
       session: false,
     },
     (username, password, done) => {
-      try {
-        User.findOne({
-          where: {
-            username,
-          },
-        }).then(user => {
+      User.findOne({
+        where: {
+          username,
+        },
+      })
+        .then(user => {
           if (!user) {
             return done(null, false, { message: 'Username not found' })
           } else {
@@ -71,9 +71,9 @@ passport.use(
             })
           }
         })
-      } catch (err) {
-        done(err)
-      }
+        .catch(err => {
+          done(err, false)
+        })
     },
   ),
 )
@@ -85,17 +85,20 @@ const jwtOptions = {
 passport.use(
   'jwt',
   new JWTStrategy(jwtOptions, (payload, done) => {
-    try {
-      User.findOne({
-        where: {
-          id: payload.id,
-        },
-      }).then(user => {
-        done(null, user)
+    User.findOne({
+      where: {
+        id: payload.id,
+      },
+    })
+      .then(user => {
+        if (user) {
+          done(null, user)
+        }
+        done(null, false)
       })
-    } catch (err) {
-      done(err)
-    }
+      .catch(err => {
+        done(err, false)
+      })
   }),
 )
 
