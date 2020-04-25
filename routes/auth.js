@@ -24,7 +24,7 @@ passport.use(
       })
         .then(user => {
           if (user !== null) {
-            done(null, false, { message: 'Username is already taken' })
+            return done(null, false, { message: 'Username is already taken' })
           } else {
             const saltPassword = password + process.env.SECRET_SALT
             bcrypt.hash(saltPassword, 12).then(hashedPassword => {
@@ -38,7 +38,7 @@ passport.use(
           }
         })
         .catch(err => {
-          done(err, false)
+          return done(err, false)
         })
     },
   ),
@@ -92,12 +92,12 @@ passport.use(
     })
       .then(user => {
         if (user) {
-          done(null, user)
+          return done(null, user)
         }
-        done(null, false)
+        return done(null, false)
       })
       .catch(err => {
-        done(err, false)
+        return done(err, false)
       })
   }),
 )
