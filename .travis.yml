@@ -1,10 +1,10 @@
+dist: precise
 language: node_js
 node_js:
   - 'stable'
 addons:
   mariadb: '10.5'
 before_install:
-  - echo "USE mysql;\nUPDATE user SET password=PASSWORD('root') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
   - mysql -e 'CREATE DATABASE IF NOT EXISTS ooly_test;'
 env:
   - NODE_ENV=test
