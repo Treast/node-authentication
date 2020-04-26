@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "api": "npx apidoc -i routes/ -o documentation/",
     "docker:start": "docker-compose up -d",
     "docker:build": "docker build -t ooly_db .",
     "docker:stop": "docker-compose down",
@@ -30,6 +31,7 @@
     "sequelize": "^5.21.7"
   },
   "devDependencies": {
+    "apidoc": "^0.20.1",
     "coveralls": "^3.1.0",
     "jest": "^25.4.0",
     "sequelize-cli": "^5.5.1",

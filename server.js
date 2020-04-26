@@ -14,11 +14,10 @@ require('./strategies/login')
 require('./strategies/register')
 require('./strategies/jwt')
 
+require('./routes/base')(app)
 require('./routes/auth')(app)
 
-app.get('/', (req, res) => {
-  res.json({ message: 'Hello World !' })
-})
+app.use('/docs', express.static('documentation'))
 
 const server = app.listen(process.env.SERVER_PORT, function () {
   console.log(`Server is running on port ${process.env.SERVER_PORT}`)
